@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEON PULSE - Superstar DJ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-cyan: #00ffff;
+            --neon-pink: #ff00ff;
+            --neon-purple: #8a2be2;
+            --neon-green: #39ff14;
+            --dark-bg: #0a0a0a;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark-bg);
+            color: white;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--neon-cyan);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s;
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        /* Particle Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            animation: float 6s infinite linear;
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--neon-cyan);
+            margin: 3px 0;
+            transition: 0.3s;
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(45deg, #0a0a0a, #1a0a2e, #16213e, #0f3460);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero-content h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: neonFlicker 2s infinite alternate;
+            text-shadow: 0 0 50px var(--neon-cyan);
+        }
+
+        @keyframes neonFlicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 3vw, 2rem);
+            margin-bottom: 40px;
+            color: var(--neon-green);
+            text-shadow: 0 0 20px var(--neon-green);
+        }
+
+        .cta-button {
+            padding: 20px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+        }
+
+        .cta-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.8);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        /* Social Stats Section */
+        .social-stats {
+            padding: 100px 50px;
+            background: var(--dark-bg);
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2rem, 5vw, 4rem);
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--neon-purple);
+            text-shadow: 0 0 30px var(--neon-purple);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px 20px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple));
+            animation: borderGlow 2s infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3);
+        }
+
+        .stat-number {
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: white;
+            margin-top: 10px;
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--neon-pink);
+        }
+
+        /* Music Store Section */
+        .music-store {
+            padding: 100px 50px;
+            background: linear-gradient(135deg, #0a0a0a, #1a0a2e);
+        }
+
+        .albums-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .album-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .album-card:hover {
+            transform: translateY(-15px) rotateY(5deg);
+            box-shadow: 0 30px 60px rgba(255, 0, 255, 0.3);
+        }
+
+        .album-cover {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .album-cover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s;
+        }
+
+        .album-card:hover .album-cover::before {
+            transform: translateX(100%);
+        }
+
+        .album-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--neon-cyan);
+        }
+
+        .album-price {
+            font-size: 1.2rem;
+            color: var(--neon-green);
+            margin-bottom: 20px;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, var(--neon-purple), var(--neon-pink));
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .add-to-cart:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(255, 0, 255, 0.5);
+        }
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border-left: 2px solid var(--neon-cyan);
+            z-index: 2000;
+            transition: right 0.3s;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .cart-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            color: var(--neon-cyan);
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: var(--neon-pink);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .cart-total {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid var(--neon-cyan);
+            text-align: center;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-green));
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Tour Dates Section */
+        .tour-dates {
+            padding: 100px 50px;
+            background: var(--dark-bg);
+            position: relative;
+        }
+
+        .tour-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tour-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tour-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(57, 255, 20, 0.3);
+        }
+
+        .tour-date {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            color: var(--neon-green);
+            margin-bottom: 10px;
+        }
+
+        .tour-venue {
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .tour-location {
+            color: var(--neon-cyan);
+            margin-bottom: 20px;
+        }
+
+        .ticket-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, var(--neon-green), var(--neon-cyan));
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Checkout Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .checkout-modal {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+
+        .modal-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            color: var(--neon-cyan);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+
+        .payment-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple));
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 80px 50px 40px;
+            background: linear-gradient(135deg, #0a0a0a, #1a0a2e);
+            text-align: center;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .social-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--neon-cyan);
+            font-size: 1.5rem;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 30px var(--neon-cyan);
+        }
+
+        .newsletter {
+            max-width: 500px;
+            margin: 0 auto 40px;
+        }
+
+        .newsletter input {
+            width: 70%;
+            padding: 15px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px 0 0 10px;
+            color: white;
+            font-size: 16px;
+        }
+
+        .newsletter button {
+            width: 30%;
+            padding: 15px;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+            border: none;
+            border-radius: 0 10px 10px 0;
+            color: white;
+            cursor: pointer;
+        }
+
+        .footer-text {
+            color: var(--neon-purple);
+            font-family: 'Orbitron', monospace;
+            text-shadow: 0 0 10px var(--neon-purple);
+        }
+
+        /* Cart Icon */
+        .cart-icon {
+            position: fixed;
+            top: 50%;
+            right: 30px;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1500;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        .cart-icon:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--neon-pink);
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Success Animation */
+        .success-animation {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .success-animation.active {
+            display: block;
+        }
+
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--neon-green);
+            margin: 0 auto 20px;
+            position: relative;
+            animation: checkmarkGlow 1s infinite alternate;
+        }
+
+        @keyframes checkmarkGlow {
+            0% { box-shadow: 0 0 20px var(--neon-green); }
+            100% { box-shadow: 0 0 40px var(--neon-green); }
+        }
+
+        .checkmark::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--neon-green);
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            nav {
+                padding: 15px 20px;
+            }
+            
+            .hero, .social-stats, .music-store, .tour-dates, footer {
+                padding: 50px 20px;
+            }
+            
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+            
+            .newsletter input {
+                width: 100%;
+                border-radius: 10px;
+                margin-bottom: 10px;
+            }
+            
+            .newsletter button {
+                width: 100%;
+                border-radius: 10px;
+            }
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+
+    <!-- Particle Background -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">NEON PULSE</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#stats">Universe</a></li>
+                <li><a href="#store">Store</a></li>
+                <li><a href="#tour">Tour</a></li>
+                <li><a href="#contact">Connect</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Icon -->
+    <div class="cart-icon" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <div class="cart-count" id="cartCount">0</div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3 class="cart-title">Digital Cart</h3>
+            <button class="close-cart" onclick="toggleCart()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="cartItems"></div>
+        <div class="cart-total">
+            <h3>Total: $<span id="cartTotal">0.00</span></h3>
+            <button class="checkout-btn" onclick="openCheckout()">Checkout</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content reveal">
+            <h1>NEON PULSE</h1>
+            <p class="hero-subtitle">DIGITAL DIMENSION DJ</p>
+            <button class="cta-button" onclick="playSound()">LISTEN NOW</button>
+        </div>
+    </section>
+
+    <!-- Social Stats Section -->
+    <section class="social-stats" id="stats">
+        <h2 class="section-title reveal">FOLLOWERS UNIVERSE</h2>
+        <div class="stats-grid">
+            <div class="stat-card reveal">
+                <div class="stat-icon"><i class="fab fa-spotify"></i></div>
+                <div class="stat-number" data-target="5200000">0</div>
+                <div class="stat-label">Spotify Followers</div>
+            </div>
+            <div class="stat-card reveal">
+                <div class="stat-icon"><i class="fab fa-youtube"></i></div>
+                <div class="stat-number" data-target="3800000">0</div>
+                <div class="stat-label">YouTube Subscribers</div>
+            </div>
+            <div class="stat-card reveal">
+                <div class="stat-icon"><i class="fab fa-instagram"></i></div>
+                <div class="stat-number" data-target="7500000">0</div>
+                <div class="stat-label">Instagram Followers</div>
+            </div>
+            <div class="stat-card reveal">
+                <div class="stat-icon"><i class="fab fa-tiktok"></i></div>
+                <div class="stat-number" data-target="12000000">0</div>
+                <div class="stat-label">TikTok Followers</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Music Store Section -->
+    <section class="music-store" id="store">
+        <h2 class="section-title reveal">DIGITAL DOWNLOADS</h2>
+        <div class="albums-grid">
+            <div class="album-card reveal">
+                <div class="album-cover">
+                    <i class="fas fa-music"></i>
+                </div>
+                <h3 class="album-title">Cyber Dreams</h3>
+                <p class="album-price">$9.99</p>
+                <button class="add-to-cart" onclick="addToCart('Cyber Dreams', 9.99)">Add to Cart</button>
+            </div>
+            <div class="album-card reveal">
+                <div class="album-cover">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 class="album-title">Electric Nights</h3>
+                <p class="album-price">$12.99</p>
+                <button class="add-to-cart" onclick="addToCart('Electric Nights', 12.99)">Add to Cart</button>
+            </div>
+            <div class="album-card reveal">
+                <div class="album-cover">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h3 class="album-title">Neon Galaxy</h3>
+                <p class="album-price">$14.99</p>
+                <button class="add-to-cart" onclick="addToCart('Neon Galaxy', 14.99)">Add to Cart</button>
+            </div>
+            <div class="album-card reveal">
+                <div class="album-cover">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h3 class="album-title">Digital Pulse</h3>
+                <p class="album-price">$11.99</p>
+                <button class="add-to-cart" onclick="addToCart('Digital Pulse', 11.99)">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tour Dates Section -->
+    <section class="tour-dates" id="tour">
+        <h2 class="section-title reveal">LIVE EXPERIENCE</h2>
+        <div class="tour-grid">
+            <div class="tour-card reveal">
+                <div class="tour-date">MAR 15, 2024</div>
+                <div class="tour-venue">Cyber Arena</div>
+                <div class="tour-location">Neo Tokyo</div>
+                <button class="ticket-btn">Get Tickets</button>
+            </div>
+            <div class="tour-card reveal">
+                <div class="tour-date">APR 22, 2024</div>
+                <div class="tour-venue">Digital Dome</div>
+                <div class="tour-location">New Angeles</div>
+                <button class="ticket-btn">Get Tickets</button>
+            </div>
+            <div class="tour-card reveal">
+                <div class="tour-date">MAY 10, 2024</div>
+                <div class="tour-venue">Neon Festival</div>
+                <div class="tour-location">Cyber City</div>
+                <button class="ticket-btn">Get Tickets</button>
+            </div>
+            <div class="tour-card reveal">
+                <div class="tour-date">JUN 18, 2024</div>
+                <div class="tour-venue">Electric Paradise</div>
+                <div class="tour-location">Future Vegas</div>
+                <button class="ticket-btn">Get Tickets</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="social-icons">
+            <a href="#" class="social-icon"><i class="fab fa-spotify"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+        </div>
+        <div class="newsletter">
+            <input type="email" placeholder="Enter your email for updates">
+            <button>Subscribe</button>
+        </div>
+        <p class="footer-text">POWERED BY THE BEAT</p>
+    </footer>
+
+    <!-- Checkout Modal -->
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="checkout-modal">
+            <h2 class="modal-title">SECURE CHECKOUT</h2>
+            <div id="checkoutForm">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Card Number</label>
+                    <input type="text" placeholder="1234 5678 9012 3456">
+                </div>
+                <div class="form-group">
+                    <label>Expiry Date</label>
+                    <input type="text" placeholder="MM/YY">
+                </div>
+                <div class="form-group">
+                    <label>CVV</label>
+                    <input type="text" placeholder="123">
+                </div>
+                <button class="payment-btn" onclick="processPayment()">Complete Payment</button>
+            </div>
+            <div class="success-animation" id="successAnimation">
+                <div class="checkmark"></div>
+                <h3 style="color: var(--neon-green);">Payment Successful!</h3>
+                <p>Your digital downloads will be available shortly.</p>
+                <button class="payment-btn" onclick="closeCheckout()">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Particle System
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Counter Animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const increment = target / 200;
+                let current = 0;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        counter.textContent = Math.floor(current).toLocaleString();
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target.toLocaleString();
+                    }
+                };
+                updateCounter();
+            });
+        }
+
+        // Scroll Reveal Animation
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(reveal => {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveal.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('active');
+                }
+            });
+        }
+
+        // Cart Functionality
+        let cart = [];
+        let cartTotal = 0;
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCartUI();
+            showAddToCartAnimation();
+        }
+
+        function updateCartUI() {
+            const cartCount = document.getElementById('cartCount');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotalElement = document.getElementById('cartTotal');
+            
+            cartCount.textContent = cart.length;
+            cartTotal = cart.reduce((sum, item) => sum + item.price, 0);
+            cartTotalElement.textContent = cartTotal.toFixed(2);
+            
+            cartItems.innerHTML = '';
+            cart.forEach((item, index) => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <span>${item.name}</span>
+                    <span>$${item.price}</span>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+        }
+
+        function toggleCart() {
+            const cartSidebar = document.getElementById('cartSidebar');
+            cartSidebar.classList.toggle('open');
+        }
+
+        function openCheckout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            document.getElementById('checkoutModal').classList.add('active');
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkoutModal').classList.remove('active');
+            document.getElementById('checkoutForm').style.display = 'block';
+            document.getElementById('successAnimation').classList.remove('active');
+        }
+
+        function processPayment() {
+            document.getElementById('checkoutForm').style.display = 'none';
+            document.getElementById('successAnimation').classList.add('active');
+            
+            // Clear cart after successful payment
+            setTimeout(() => {
+                cart = [];
+                updateCartUI();
+                toggleCart();
+            }, 3000);
+        }
+
+        function showAddToCartAnimation() {
+            // Simple animation feedback
+            const cartIcon = document.querySelector('.cart-icon');
+            cartIcon.style.transform = 'translateY(-50%) scale(1.3)';
+            setTimeout(() => {
+                cartIcon.style.transform = 'translateY(-50%) scale(1)';
+            }, 200);
+        }
+
+        // Sound Effects
+        function playSound() {
+            // Create audio context for beat drop effect
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + 0.5);
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            
+            // Trigger counter animation when stats section is visible
+            const statsSection = document.getElementById('stats');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            observer.observe(statsSection);
+        });
+
+        // Event Listeners
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        // Mobile Menu Toggle
+        document.querySelector('.hamburger').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('checkoutModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeCheckout();
+            }
+        });
+    </script>
+</body>
+</html>
